@@ -3,46 +3,31 @@ package org.example;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        ArrayList<String> titleArray = new ArrayList<String>();
-        File titleFile = new File("recipe-titles.txt");
+        File inputFile = new File("recipe-list.txt");
+        File outputFile = new File("recipe-list2.txt");
+        HashMap<String, String> recipeBook = new HashMap<>();
+        try(Scanner scanner = new Scanner(inputFile); PrintWriter writer = new PrintWriter(new FileOutputStream(outputFile, true))) {
+            while(scanner.hasNextLine()) {
+                String nextLine = scanner.nextLine();
+                String[] recipe = nextLine.split(" \\| ");
+                String title = recipe[0];
+                String ingredients = "";
+                String instruction = recipe[recipe.length - 1].replaceAll("\\|", "").replaceAll("- ", "").trim();
 
-        try (Scanner scanner = new Scanner(titleFile)) {
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                titleArray.add(line);
-            }
-        } catch (Exception ex) {
-            System.out.println("Something went wrong");
-        }
-
-        File recipeFile = new File("recipe-list.txt");
-        File recipeBook = new File("recipes.txt");
-
-        try (Scanner bodyScanner = new Scanner(recipeBook); PrintWriter writer = new PrintWriter(new FileOutputStream(recipeFile, false))) {
-            for (int i = 0; i < titleArray.size() -1 ; i ++) {
-                String currentTitle = titleArray.get(i);
-                String nextTitle = titleArray.get(i + 1);
-                StringBuilder description = new StringBuilder();
-                while (bodyScanner.hasNextLine()) {
-                    String currentLine = bodyScanner.nextLine();
-
-                        if (currentLine.contains(nextTitle)) {
-                            writer.println(currentTitle + " | " + description);
-                            break;
-                        }
-                    description.append(" ").append(currentLine);
-
+                for (int i = 1; i < recipe.length-1; i++) {
+                    ingredients += recipe[i] + " ";
                 }
+                writer.println(title + " | " + ingredients.replaceAll("•", "").trim() + " | " + instruction);
             }
-        } catch (Exception ex) {
-            System.out.println("Problem fetching recipes");
+        } catch(Exception ex) {
+            System.out.println("Problem updating recipe");
         }
 
     }
