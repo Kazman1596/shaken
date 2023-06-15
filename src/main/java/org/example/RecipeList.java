@@ -23,7 +23,10 @@ public class RecipeList {
         }
     }
 
-    public void searchRecipe(String search) {
+    public void searchRecipe(Scanner in) {
+        System.out.println(System.lineSeparator() + "Please type in a cocktail:");
+        String search = in.nextLine();
+
         if (recipeMap.containsKey(search.toLowerCase())) {
             Recipe recipe = recipeMap.get(search.toLowerCase());
             System.out.println("This is the cocktail: " + recipe.getTitle());
