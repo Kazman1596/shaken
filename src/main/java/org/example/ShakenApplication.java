@@ -12,6 +12,8 @@ public class ShakenApplication {
     private static final String[] MAIN_MENU_OPTIONS = { MAIN_MENU_OPTION_SEARCH, MAIN_MENU_OPTION_INGREDIENTS, MAIN_MENU_OPTION_CREATE, MAIN_MENU_OPTION_EXIT};
 
     private Menu menu;
+
+    SearchResultsMenu searchResultsMenu = new SearchResultsMenu();
     RecipeList recipeList = new RecipeList();
     Scanner userInput = new Scanner(System.in);
 
@@ -21,11 +23,13 @@ public class ShakenApplication {
     public void run() {
 
         while (true) {
+            System.out.println(MAIN_MENU_WELCOME);
             String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 
 
             if (choice.equals(MAIN_MENU_OPTION_SEARCH)) {
-                recipeList.searchRecipe(userInput);
+                Object[] recipeSearch = recipeList.searchOptionsOutput(userInput);
+                searchResultsMenu.runSearchResultsMenu(recipeSearch);
             } else if (choice.equals(MAIN_MENU_OPTION_INGREDIENTS)) {
                 System.out.println("Searching by ingredients...");
             } else if (choice.equals(MAIN_MENU_OPTION_CREATE)) {

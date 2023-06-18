@@ -1,7 +1,9 @@
 package org.example;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class RecipeList {
@@ -23,20 +25,22 @@ public class RecipeList {
         }
     }
 
-    public void searchRecipe(Scanner in) {
+    public HashMap<String, Recipe> getRecipeMap() {
+        return recipeMap;
+    }
+
+    public Object[] searchOptionsOutput(Scanner in) {
+        ArrayList<String> searchResults = new ArrayList<>();
         System.out.println(System.lineSeparator() + "Please type in a cocktail:");
         String search = in.nextLine();
 
-        if (recipeMap.containsKey(search.toLowerCase())) {
-            Recipe recipe = recipeMap.get(search.toLowerCase());
-            System.out.println("This is the cocktail: " + recipe.getTitle());
-            System.out.println("INGREDIENTS:");
-            System.out.println(recipe.getIngredients());
-            System.out.println("INSTRUCTIONS:");
-            System.out.println(recipe.getInstructions());
-        } else {
-            System.out.println("Could not find your drink of choice");
+        for (Map.Entry<String, Recipe> recipe : recipeMap.entrySet()) {
+            String recipeKey = recipe.getKey();
+            if (recipeKey.contains(search.toLowerCase())) {
+                searchResults.add(recipe.getValue().getTitle());
+            }
         }
+        return searchResults.toArray();
     }
 
 

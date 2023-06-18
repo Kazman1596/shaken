@@ -29,4 +29,8 @@ public class Recipe {
     public String setGlassware() {
         return "";
     }
+
+    public String recipeResultText() {
+        return title + System.lineSeparator() + ingredients + System.lineSeparator() + instructions + System.lineSeparator();
+    }
 }
