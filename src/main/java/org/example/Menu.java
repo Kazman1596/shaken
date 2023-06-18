@@ -41,7 +41,9 @@ public class Menu {
     }
 
     public void displayMenuOptions(Object[] options) {
-        System.out.println("Welcome to Shaken!" + System.lineSeparator());
+        if (options.length == 0) {
+            System.out.println("Your drink of choice isn't available");
+        }
         for (int i=0; i < options.length; i++) {
             int optionNum = i + 1;
             out.println("(" + optionNum + ") " + options[i]);
