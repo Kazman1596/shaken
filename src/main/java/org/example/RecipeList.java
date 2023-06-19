@@ -43,5 +43,31 @@ public class RecipeList {
         return searchResults.toArray();
     }
 
+    public Object[] searchIngredientOptionsOutput(Scanner in) {
+        ArrayList<String> searchResults = new ArrayList<>();
+        System.out.println(System.lineSeparator() + "Please list the ingredients you have in your house, separated by commas:");
+        String search = in.nextLine();
+        String[] ingredientsArray = search.split(",");
+
+        for (Map.Entry<String, Recipe> recipe : recipeMap.entrySet()) {
+            Recipe searchRecipe = recipe.getValue();
+            String searchRecipeIngredients = searchRecipe.getIngredients();
+
+            int counter = 0;
+            for (String ingredient : ingredientsArray) {
+                if (searchRecipeIngredients.contains(ingredient.trim())) {
+                    counter++;
+                }
+                if (counter == ingredientsArray.length) {
+                    searchResults.add(recipe.getValue().getTitle());
+                    break;
+                }
+            }
+
+        }
+        return searchResults.toArray();
+    }
+
+
 
 }

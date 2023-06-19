@@ -31,17 +31,17 @@ public class ShakenApplication {
                 Object[] recipeSearch = recipeList.searchOptionsOutput(userInput);
                 searchResultsMenu.runSearchResultsMenu(recipeSearch);
             } else if (choice.equals(MAIN_MENU_OPTION_INGREDIENTS)) {
-                System.out.println("Searching by ingredients...");
+                Object[] ingredientSearch = recipeList.searchIngredientOptionsOutput(userInput);
+                searchResultsMenu.runSearchResultsMenu(ingredientSearch);
             } else if (choice.equals(MAIN_MENU_OPTION_CREATE)) {
                 System.out.println("Creating cocktail...");
             } else if (choice.equals(MAIN_MENU_OPTION_EXIT)) {
                 System.out.println("Goodbye!");
                 break;
             }
-
         }
-
     }
+
     public static void main(String[] args) {
         Menu menu = new Menu(System.in, System.out);
         ShakenApplication cli = new ShakenApplication(menu);
