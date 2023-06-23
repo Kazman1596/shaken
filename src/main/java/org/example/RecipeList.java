@@ -1,18 +1,20 @@
 package org.example;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 public class RecipeList {
-    File inputFile = new File("recipe-list.txt");
+    File recipeFile = new File("/Users/stephenkaczmarowski/workspace/stephen-kaczmarowski-code/bartenders-friend/recipe-list.txt");
     HashMap<String, Recipe> recipeMap = new HashMap<>();
 
     public RecipeList() {
 
-        try(Scanner scanner = new Scanner(inputFile)) {
+        try(Scanner scanner = new Scanner(recipeFile)) {
             while (scanner.hasNextLine()) {
                 String recipeLine = scanner.nextLine();
                 String[] recipeArr = recipeLine.split(" \\| ");
@@ -68,6 +70,17 @@ public class RecipeList {
         return searchResults.toArray();
     }
 
+    //TODO: Fix --> If you create a recipe then search for recipe right after, it will throw NullPointerException Error
+
+    public void createRecipe(String title, String ingredients, String instructions) {
+        Recipe newRecipe = new Recipe(title.toUpperCase(), ingredients, instructions);
+        try(PrintWriter writer = new PrintWriter(new FileOutputStream(recipeFile,true))) {
+            writer.println(title.toUpperCase() + " | " + ingredients + " | " + instructions);
+        } catch (Exception ex) {
+            System.out.println("Problem creating new recipe");
+        }
+        recipeMap.put(title.toLowerCase(), newRecipe);
+    }
 
 
 }

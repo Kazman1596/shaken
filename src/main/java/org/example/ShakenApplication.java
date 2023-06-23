@@ -1,5 +1,7 @@
 package org.example;
 
+import java.io.File;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class ShakenApplication {
@@ -34,7 +36,13 @@ public class ShakenApplication {
                 Object[] ingredientSearch = recipeList.searchIngredientOptionsOutput(userInput);
                 searchResultsMenu.runSearchResultsMenu(ingredientSearch);
             } else if (choice.equals(MAIN_MENU_OPTION_CREATE)) {
-                System.out.println("Creating cocktail...");
+                System.out.println("Title:");
+                String userInputTitle = userInput.nextLine();
+                System.out.println("Ingredients (please do not separate using commas):");
+                String userInputIngredients = userInput.nextLine();
+                System.out.println("Instructions:");
+                String userInputInstructions = userInput.nextLine();
+                recipeList.createRecipe(userInputTitle, userInputIngredients, userInputInstructions);
             } else if (choice.equals(MAIN_MENU_OPTION_EXIT)) {
                 System.out.println("Goodbye!");
                 break;
@@ -46,6 +54,29 @@ public class ShakenApplication {
         Menu menu = new Menu(System.in, System.out);
         ShakenApplication cli = new ShakenApplication(menu);
         cli.run();
+
+        //Clean up
+        File file = new File("recipe-list.txt");
+        File outputFile = new File("recipe-list2.txt");
+        try(Scanner scanner = new Scanner(file); PrintWriter writer = new PrintWriter(outputFile)) {
+            while (scanner.hasNextLine()) {
+                //Setting up scanner / writer
+                String line = scanner.nextLine();
+                String[] lineArray = line.split(" \\| ");
+                String title = lineArray[0];
+                String ingredients = lineArray[1];
+                String instructions = lineArray[2];
+
+                String newIngredients = " " + ingredients + " ";
+                //TODO: Splitting ingredients by comma
+
+                //Putting it back together
+                    System.out.println(newIngredients.trim());
+                //writer.println(title + " | " + newIngredients + " | " + instructions);
+            }
+        } catch (Exception ex) {
+            System.out.println("Trouble reading recipe");
+        }
 
     }
 
