@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.model.RecipeList;
+
 import java.io.File;
 import java.io.PrintWriter;
 import java.util.Scanner;
@@ -9,13 +11,13 @@ public class ShakenApplication {
     private static final String MAIN_MENU_WELCOME = "Welcome to Shaken!";
     private static final String MAIN_MENU_OPTION_SEARCH = "Search Cocktail";
     private static final String MAIN_MENU_OPTION_INGREDIENTS = "Find A Drink With Ingredients You Have";
-    private static final String MAIN_MENU_OPTION_CREATE = "Create New Cocktail";
+    private static final String MAIN_MENU_OPTION_COCKTAIL = "Cocktail Database";
     private static final String MAIN_MENU_OPTION_EXIT = "Exit Application";
-    private static final String[] MAIN_MENU_OPTIONS = { MAIN_MENU_OPTION_SEARCH, MAIN_MENU_OPTION_INGREDIENTS, MAIN_MENU_OPTION_CREATE, MAIN_MENU_OPTION_EXIT};
+    private static final String[] MAIN_MENU_OPTIONS = { MAIN_MENU_OPTION_SEARCH, MAIN_MENU_OPTION_INGREDIENTS, MAIN_MENU_OPTION_COCKTAIL, MAIN_MENU_OPTION_EXIT};
 
     private Menu menu;
-
     SearchResultsMenu searchResultsMenu = new SearchResultsMenu();
+    CocktailMenu cocktailMenu = new CocktailMenu();
     RecipeList recipeList = new RecipeList();
     Scanner userInput = new Scanner(System.in);
 
@@ -35,14 +37,8 @@ public class ShakenApplication {
             } else if (choice.equals(MAIN_MENU_OPTION_INGREDIENTS)) {
                 Object[] ingredientSearch = recipeList.searchIngredientOptionsOutput(userInput);
                 searchResultsMenu.runSearchResultsMenu(ingredientSearch);
-            } else if (choice.equals(MAIN_MENU_OPTION_CREATE)) {
-                System.out.println("Title:");
-                String userInputTitle = userInput.nextLine();
-                System.out.println("Ingredients (please do not separate using commas):");
-                String userInputIngredients = userInput.nextLine();
-                System.out.println("Instructions:");
-                String userInputInstructions = userInput.nextLine();
-                recipeList.createRecipe(userInputTitle, userInputIngredients, userInputInstructions);
+            } else if (choice.equals(MAIN_MENU_OPTION_COCKTAIL)) {
+                cocktailMenu.runCocktailDatabaseMenu();
             } else if (choice.equals(MAIN_MENU_OPTION_EXIT)) {
                 System.out.println("Goodbye!");
                 break;

@@ -1,5 +1,8 @@
 package org.example;
 
+import org.example.model.Recipe;
+import org.example.model.RecipeList;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;

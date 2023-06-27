@@ -1,9 +1,12 @@
-package org.example;
+package org.example.model;
 
 public class Recipe {
+    private int recipeId;
     private String title;
     private String ingredients;
     private String instructions;
+    private int userId;
+    private int rating;
     private String glassWare;
 
     public Recipe(String title, String ingredients, String instructions) {
