@@ -1,16 +1,21 @@
 package org.example.model;
 
+import org.example.dao.JdbcRecipeDao;
+
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 import java.util.Scanner;
+import java.util.UUID;
 
 public class RecipeList {
-    File recipeFile = new File("/Users/stephenkaczmarowski/workspace/stephen-kaczmarowski-code/bartenders-friend/recipe-list.txt");
-    HashMap<String, Recipe> recipeMap = new HashMap<>();
+    File recipeFile = new File("recipe-list.txt");
+    List<Recipe> recipeList = new ArrayList<>();
+
+    //TODO: Recipes write to the database twice
+    //TODO: Recipes throw an error after 323 PLANTER'S PUNCH
+    JdbcRecipeDao jdbcRecipeDao = new JdbcRecipeDao();
+
 
     public RecipeList() {
 
@@ -18,17 +23,17 @@ public class RecipeList {
             while (scanner.hasNextLine()) {
                 String recipeLine = scanner.nextLine();
                 String[] recipeArr = recipeLine.split(" \\| ");
-                String title = recipeArr[0];
-                Recipe recipe = new Recipe(recipeArr[0], recipeArr[1], recipeArr[2]);
-                recipeMap.put(title.toLowerCase(), recipe);
+                Recipe recipe = new Recipe(recipeArr[0], recipeArr[1], recipeArr[2], recipeArr[3], 1);
+                recipeList.add(recipe);
+
             }
         } catch(Exception ex) {
             System.out.println("Problem fetching recipe");
         }
     }
 
-    public HashMap<String, Recipe> getRecipeMap() {
-        return recipeMap;
+    public List<Recipe> getRecipeList() {
+        return recipeList;
     }
 
     public Object[] searchOptionsOutput(Scanner in) {
@@ -36,10 +41,10 @@ public class RecipeList {
         System.out.println(System.lineSeparator() + "Please type in a cocktail:");
         String search = in.nextLine();
 
-        for (Map.Entry<String, Recipe> recipe : recipeMap.entrySet()) {
-            String recipeKey = recipe.getKey();
-            if (recipeKey.contains(search.toLowerCase())) {
-                searchResults.add(recipe.getValue().getTitle());
+        for (Recipe recipe : recipeList) {
+            String recipeTitle = recipe.getTitle().toLowerCase();
+            if (recipeTitle.contains(search.toLowerCase())) {
+                searchResults.add(recipe.getTitle());
             }
         }
         return searchResults.toArray();
@@ -49,19 +54,18 @@ public class RecipeList {
         ArrayList<String> searchResults = new ArrayList<>();
         System.out.println(System.lineSeparator() + "Please list the ingredients you have in your house, separated by commas:");
         String search = in.nextLine();
-        String[] ingredientsArray = search.split(",");
+        String[] userIngredientsArray = search.split(",");
 
-        for (Map.Entry<String, Recipe> recipe : recipeMap.entrySet()) {
-            Recipe searchRecipe = recipe.getValue();
-            String searchRecipeIngredients = searchRecipe.getIngredients();
+        for (Recipe recipe : recipeList) {
+            String searchRecipeIngredients = recipe.getIngredients();
 
             int counter = 0;
-            for (String ingredient : ingredientsArray) {
+            for (String ingredient : userIngredientsArray) {
                 if (searchRecipeIngredients.contains(ingredient.trim())) {
                     counter++;
                 }
-                if (counter == ingredientsArray.length) {
-                    searchResults.add(recipe.getValue().getTitle());
+                if (counter == userIngredientsArray.length) {
+                    searchResults.add(recipe.getTitle());
                     break;
                 }
             }
@@ -70,17 +74,26 @@ public class RecipeList {
         return searchResults.toArray();
     }
 
-    //TODO: Fix --> If you create a recipe then search for recipe right after, it will throw NullPointerException Error
-
-    public void createRecipe(String title, String ingredients, String instructions) {
-        Recipe newRecipe = new Recipe(title.toUpperCase(), ingredients, instructions);
-        try(PrintWriter writer = new PrintWriter(new FileOutputStream(recipeFile,true))) {
-            writer.println(title.toUpperCase() + " | " + ingredients + " | " + instructions);
-        } catch (Exception ex) {
-            System.out.println("Problem creating new recipe");
+    public Recipe getRecipeByTitle(String title) {
+        for (Recipe recipe : recipeList) {
+            if (recipe.getTitle().equalsIgnoreCase(title)) {
+                return recipe;
+            }
         }
-        recipeMap.put(title.toLowerCase(), newRecipe);
+        return null;
     }
+//    public void createRecipe(String title, String ingredients, String instructions, String glassWare) {
+//        Recipe newRecipe = new Recipe(title.toUpperCase(), ingredients, instructions, glassWare, 1 );
+//        try(PrintWriter writer = new PrintWriter(new FileOutputStream(recipeFile,true))) {
+//            writer.println(title.toUpperCase() + " | " + ingredients + " | " + instructions);
+//        } catch (Exception ex) {
+//            System.out.println("Problem creating new recipe");
+//        }
+//        recipeList.add(newRecipe);
+//    }
 
+    public String generateUUID() {
+        return UUID.randomUUID().toString();
+    }
 
 }

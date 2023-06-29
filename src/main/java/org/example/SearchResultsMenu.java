@@ -5,14 +5,12 @@ import org.example.model.RecipeList;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 
 public class SearchResultsMenu {
     private static final String SEARCH_RESULT_MENU_BACK = "Go back";
     private static final Object[] searchResultMenuOptions = {SEARCH_RESULT_MENU_BACK};
     Menu menu = new Menu(System.in, System.out);
     RecipeList recipeList = new RecipeList();
-    HashMap<String, Recipe> recipeMap = recipeList.getRecipeMap();
 
     public void runSearchResultsMenu(Object[] cocktailSearchResults) {
         while(true) {
@@ -28,7 +26,7 @@ public class SearchResultsMenu {
     public void runResult(String searchResult) {
 
         while(true) {
-            Recipe recipe = recipeMap.get(searchResult.toLowerCase());
+            Recipe recipe = recipeList.getRecipeByTitle(searchResult);
             System.out.println(recipe.recipeResultText());
             Object choice = menu.getChoiceFromOptions(searchResultMenuOptions);
             if (choice.equals(SEARCH_RESULT_MENU_BACK)) {
