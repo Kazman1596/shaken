@@ -11,9 +11,6 @@ import java.util.UUID;
 public class RecipeList {
     File recipeFile = new File("recipe-list.txt");
     List<Recipe> recipeList = new ArrayList<>();
-
-    //TODO: Recipes write to the database twice
-    //TODO: Recipes throw an error after 323 PLANTER'S PUNCH
     JdbcRecipeDao jdbcRecipeDao = new JdbcRecipeDao();
 
 
@@ -30,48 +27,6 @@ public class RecipeList {
         } catch(Exception ex) {
             System.out.println("Problem fetching recipe");
         }
-    }
-
-    public List<Recipe> getRecipeList() {
-        return recipeList;
-    }
-
-    public Object[] searchOptionsOutput(Scanner in) {
-        ArrayList<String> searchResults = new ArrayList<>();
-        System.out.println(System.lineSeparator() + "Please type in a cocktail:");
-        String search = in.nextLine();
-
-        for (Recipe recipe : recipeList) {
-            String recipeTitle = recipe.getTitle().toLowerCase();
-            if (recipeTitle.contains(search.toLowerCase())) {
-                searchResults.add(recipe.getTitle());
-            }
-        }
-        return searchResults.toArray();
-    }
-
-    public Object[] searchIngredientOptionsOutput(Scanner in) {
-        ArrayList<String> searchResults = new ArrayList<>();
-        System.out.println(System.lineSeparator() + "Please list the ingredients you have in your house, separated by commas:");
-        String search = in.nextLine();
-        String[] userIngredientsArray = search.split(",");
-
-        for (Recipe recipe : recipeList) {
-            String searchRecipeIngredients = recipe.getIngredients();
-
-            int counter = 0;
-            for (String ingredient : userIngredientsArray) {
-                if (searchRecipeIngredients.contains(ingredient.trim())) {
-                    counter++;
-                }
-                if (counter == userIngredientsArray.length) {
-                    searchResults.add(recipe.getTitle());
-                    break;
-                }
-            }
-
-        }
-        return searchResults.toArray();
     }
 
     public Recipe getRecipeByTitle(String title) {

@@ -1,33 +1,30 @@
 package org.example;
 
+import org.example.dao.JdbcRecipeDao;
 import org.example.model.Recipe;
 import org.example.model.RecipeList;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 public class SearchResultsMenu {
     private static final String SEARCH_RESULT_MENU_BACK = "Go back";
     private static final Object[] searchResultMenuOptions = {SEARCH_RESULT_MENU_BACK};
     Menu menu = new Menu(System.in, System.out);
     RecipeList recipeList = new RecipeList();
+    JdbcRecipeDao jdbcRecipeDao = new JdbcRecipeDao();
 
-    public void runSearchResultsMenu(Object[] cocktailSearchResults) {
+    public void runSearchResultsMenu(List<Recipe> cocktailSearchResults) {
         while(true) {
-            Object[] searchOptions = createResultsOptions(cocktailSearchResults);
-            Object choice = menu.getChoiceFromOptions(searchOptions);
-            if (choice.equals(SEARCH_RESULT_MENU_BACK)) {
-                break;
-            }
-            runResult(choice.toString());
+            Recipe choice = menu.getRecipeChoiceFromOptions(cocktailSearchResults);
+            runResult(choice);
+            break;
         }
     }
 
-    public void runResult(String searchResult) {
+    public void runResult(Recipe recipeChoice) {
 
         while(true) {
-            Recipe recipe = recipeList.getRecipeByTitle(searchResult);
-            System.out.println(recipe.recipeResultText());
+            System.out.println(recipeChoice.recipeResultText());
             Object choice = menu.getChoiceFromOptions(searchResultMenuOptions);
             if (choice.equals(SEARCH_RESULT_MENU_BACK)) {
                 break;
@@ -35,9 +32,9 @@ public class SearchResultsMenu {
         }
     }
 
-    public Object[] createResultsOptions(Object[] searchResults) {
-        ArrayList<Object> menuOptions = new ArrayList<>(Arrays.asList(searchResults));
-        menuOptions.add(SEARCH_RESULT_MENU_BACK);
+    public Object[] createResultsOptions(List<Recipe> searchResults) {
+        List<Recipe> menuOptions = searchResults;
+//        menuOptions.add(SEARCH_RESULT_MENU_BACK);
 
         return menuOptions.toArray();
     }

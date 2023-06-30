@@ -89,6 +89,6 @@ public class Recipe {
     }
 
     public String recipeResultText() {
-        return title + System.lineSeparator() + ingredients + System.lineSeparator() + instructions + System.lineSeparator();
+        return title + System.lineSeparator() + glass + System.lineSeparator() + ingredients + System.lineSeparator() + instructions + System.lineSeparator();
     }
 }

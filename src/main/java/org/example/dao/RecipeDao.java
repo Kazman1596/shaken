@@ -2,19 +2,21 @@ package org.example.dao;
 
 import org.example.model.Recipe;
 
+import java.util.List;
+
 public interface RecipeDao {
 
+    //Returns all recipes
+    List<Recipe> getRecipes();
+
     // Returns a list of recipes that contain userInput
-    Recipe[] getRecipesByTitle(String userInput);
+    List<Recipe> getRecipesByTitle(String userInput, boolean wild);
 
     // Returns a specific recipe
     Recipe getRecipeById(int id);
 
     // Returns a list of recipes made by a user
-    Recipe[] getRecipesByAccountId(int accountId);
-
-    //Returns a list of recipes that contain the users ingredients
-    Recipe[] getRecipesByIngredients(String userIngredients);
+    List<Recipe> getRecipesByAccountId(int accountId);
 
     //Creates a new recipe and adds to the database, returned for testing
     Recipe createRecipe(Recipe newRecipe);
