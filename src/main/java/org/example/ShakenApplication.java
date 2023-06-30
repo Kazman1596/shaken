@@ -2,8 +2,9 @@ package org.example;
 
 import org.example.dao.JdbcRecipeDao;
 import org.example.model.Recipe;
-import org.example.model.RecipeList;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class ShakenApplication {
@@ -15,11 +16,12 @@ public class ShakenApplication {
     private static final String MAIN_MENU_OPTION_EXIT = "Exit Application";
     private static final String[] MAIN_MENU_OPTIONS = {MAIN_MENU_OPTION_SEARCH, MAIN_MENU_OPTION_INGREDIENTS, MAIN_MENU_OPTION_COCKTAIL, MAIN_MENU_OPTION_EXIT};
 
-    private Menu menu;
+    private final Menu menu;
     SearchResultsMenu searchResultsMenu = new SearchResultsMenu();
     CocktailMenu cocktailMenu = new CocktailMenu();
-    RecipeList recipeList = new RecipeList();
     Scanner userInput = new Scanner(System.in);
+
+    JdbcRecipeDao jdbcRecipeDao = new JdbcRecipeDao();
 
     public ShakenApplication(Menu menu) {
         this.menu = menu;
@@ -33,10 +35,10 @@ public class ShakenApplication {
 
 
             if (choice.equals(MAIN_MENU_OPTION_SEARCH)) {
-                Object[] recipeSearch = recipeList.searchOptionsOutput(userInput);
+                List<Recipe> recipeSearch = searchTitlePrompt(userInput);
                 searchResultsMenu.runSearchResultsMenu(recipeSearch);
             } else if (choice.equals(MAIN_MENU_OPTION_INGREDIENTS)) {
-                Object[] ingredientSearch = recipeList.searchIngredientOptionsOutput(userInput);
+                List<Recipe> ingredientSearch = searchIngredientsPrompt(userInput);
                 searchResultsMenu.runSearchResultsMenu(ingredientSearch);
             } else if (choice.equals(MAIN_MENU_OPTION_COCKTAIL)) {
                 cocktailMenu.runCocktailDatabaseMenu();
@@ -47,14 +49,42 @@ public class ShakenApplication {
         }
     }
 
+    public List<Recipe> searchTitlePrompt(Scanner in) {
+        System.out.println(System.lineSeparator() + "Please type in a cocktail:");
+        String search = in.nextLine();
+        return jdbcRecipeDao.getRecipesByTitle(search, true);
+    }
+
+    public List<Recipe> searchIngredientsPrompt(Scanner in) {
+        System.out.println(System.lineSeparator() + "Please list the ingredients you have in your house, separated by commas:");
+        String search = in.nextLine();
+        return searchForIngredients(search);
+    }
+
+    public List<Recipe> searchForIngredients(String userInput) {
+        List<Recipe> results = new ArrayList<>();
+        String[] userIngredientsArray = userInput.split(",");
+        List<Recipe> recipeList = jdbcRecipeDao.getRecipes();
+
+        for (Recipe recipe : recipeList) {
+            String searchRecipeIngredients = recipe.getIngredients();
+            int counter = 0;
+            for (String ingredient : userIngredientsArray) {
+                if (searchRecipeIngredients.contains(ingredient.trim())) {
+                    counter++;
+                }
+                if (counter == userIngredientsArray.length) {
+                    results.add(recipe);
+                    break;
+                }
+            }
+        }
+        return results;
+    }
+
     public static void main(String[] args) {
-        RecipeList recipeList = new RecipeList();
-        JdbcRecipeDao jdbcRecipeDao = new JdbcRecipeDao();
         Menu menu = new Menu(System.in, System.out);
         ShakenApplication cli = new ShakenApplication(menu);
         cli.run();
-        for (Recipe recipe : recipeList.getRecipeList()) {
-            jdbcRecipeDao.createRecipe(recipe);
-        }
     }
 }
