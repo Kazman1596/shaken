@@ -17,6 +17,7 @@ public class Menu {
         this.in = new Scanner(input);
     }
 
+    //TODO: Refactor the very similar getChoice and getRecipeChoice methods below
     public Recipe getRecipeChoiceFromOptions(List<Recipe> recipes) {
         Recipe choice = null;
         while(choice == null) {
@@ -75,7 +76,7 @@ public class Menu {
         for (int i=0; i < options.length; i++) {
             int optionNum = i + 1;
             out.println("(" + optionNum + ") " + options[i]);
-        };
+        }
 
         out.println(System.lineSeparator() + "Please select an option >>> ");
         out.flush();

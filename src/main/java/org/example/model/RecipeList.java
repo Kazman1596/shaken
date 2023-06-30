@@ -22,11 +22,14 @@ public class RecipeList {
                 String[] recipeArr = recipeLine.split(" \\| ");
                 Recipe recipe = new Recipe(recipeArr[0], recipeArr[1], recipeArr[2], recipeArr[3], 1);
                 recipeList.add(recipe);
-
             }
         } catch(Exception ex) {
             System.out.println("Problem fetching recipe");
         }
+    }
+
+    public List<Recipe> getRecipeList() {
+        return recipeList;
     }
 
     public Recipe getRecipeByTitle(String title) {

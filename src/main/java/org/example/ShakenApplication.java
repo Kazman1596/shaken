@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ShakenApplication {
+    //TODO: Once C.R.U.D. DAO connections are finished, main focus is working on Unit & Integration Tests!
 
     private static final String MAIN_MENU_WELCOME = "Welcome to Shaken!";
     private static final String MAIN_MENU_OPTION_SEARCH = "Search Cocktail";
@@ -86,5 +87,15 @@ public class ShakenApplication {
         Menu menu = new Menu(System.in, System.out);
         ShakenApplication cli = new ShakenApplication(menu);
         cli.run();
+
+        //TODO: To prevent lossy encoding and to be able to properly backup your DB,
+        // edit recipe-list one last time to remove non-UTF-8 characters
+        // *** REMEMBER to run jdbcRecipeDao.createRecipe below through recipeList() ***
+//        RecipeList recipeList = new RecipeList();
+//        JdbcRecipeDao jdbcRecipeDao = new JdbcRecipeDao();
+//        List<Recipe> recipes = recipeList.getRecipeList();
+//        for (Recipe recipe : recipes) {
+//            jdbcRecipeDao.createRecipe(recipe);
+//        }
     }
 }
