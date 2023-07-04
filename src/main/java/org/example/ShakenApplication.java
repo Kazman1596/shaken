@@ -15,7 +15,9 @@ public class ShakenApplication {
     private static final String MAIN_MENU_OPTION_INGREDIENTS = "Find A Drink With Ingredients You Have";
     private static final String MAIN_MENU_OPTION_COCKTAIL = "Cocktail Database";
     private static final String MAIN_MENU_OPTION_EXIT = "Exit Application";
+    private static final String GO_BACK = "Go back";
     private static final String[] MAIN_MENU_OPTIONS = {MAIN_MENU_OPTION_SEARCH, MAIN_MENU_OPTION_INGREDIENTS, MAIN_MENU_OPTION_COCKTAIL, MAIN_MENU_OPTION_EXIT};
+    private static final String[] GO_BACK_OPTION = {GO_BACK};
 
     private final Menu menu;
     SearchResultsMenu searchResultsMenu = new SearchResultsMenu();
@@ -37,10 +39,12 @@ public class ShakenApplication {
 
             if (choice.equals(MAIN_MENU_OPTION_SEARCH)) {
                 List<Recipe> recipeSearch = searchTitlePrompt(userInput);
-                searchResultsMenu.runSearchResultsMenu(recipeSearch);
+                Recipe recipe = searchResultsMenu.runSearchResultsMenu(recipeSearch);
+                searchResults(recipe);
             } else if (choice.equals(MAIN_MENU_OPTION_INGREDIENTS)) {
                 List<Recipe> ingredientSearch = searchIngredientsPrompt(userInput);
-                searchResultsMenu.runSearchResultsMenu(ingredientSearch);
+                Recipe recipe = searchResultsMenu.runSearchResultsMenu(ingredientSearch);
+                searchResults(recipe);
             } else if (choice.equals(MAIN_MENU_OPTION_COCKTAIL)) {
                 cocktailMenu.runCocktailDatabaseMenu();
             } else if (choice.equals(MAIN_MENU_OPTION_EXIT)) {
@@ -54,6 +58,16 @@ public class ShakenApplication {
         System.out.println(System.lineSeparator() + "Please type in a cocktail:");
         String search = in.nextLine();
         return jdbcRecipeDao.getRecipesByTitle(search, true);
+    }
+
+    public void searchResults(Recipe recipe) {
+        System.out.println(recipe.recipeResultText());
+        while(true) {
+            Object choice = menu.getChoiceFromOptions(GO_BACK_OPTION);
+            if (choice.equals(GO_BACK)) {
+                break;
+            }
+        }
     }
 
     public List<Recipe> searchIngredientsPrompt(Scanner in) {
