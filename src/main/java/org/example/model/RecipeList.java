@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
 
+//TODO: DELETE after fixing database data
 public class RecipeList {
     File recipeFile = new File("recipe-list.txt");
     List<Recipe> recipeList = new ArrayList<>();
