@@ -46,12 +46,12 @@ INSERT INTO account(first_name, last_name, email, bio, username, password_id, da
 VALUES('Stephen', 'Kaczmarowski', 'srkaz94@gmail.com', 'Creator of the app', 'Kazman1596', 1, '6-28-2023');
 
 INSERT INTO recipe(title, ingredients, instructions, glass, rating, post_date, post_time)
-VALUES('MARGARITA', 'lime + salt + simple syrup + triple sec + tequila', 'Salt rim of glass, add lime juice, simple syrup, triple sec, and tequila. Shake well. Strain into glass', 'Cocktail Glass', 5, '1/5/2023', '5:30:00');
+VALUES('MARGARITA', 'lime + salt + simple syrup + triple sec + tequila', 'Salt rim of glass, add lime juice, simple syrup, triple sec, and tequila. Shake well. Strain into glass', 'Cocktail Glass', 1, '1/5/2023', '5:30:00');
 INSERT INTO recipe(title, ingredients, instructions, glass, rating, post_date, post_time)
-VALUES('OLD FASHIONED', 'bitters + peel of orange + whiskey + maraschino cherry (optional) + sugar cube', 'Place sugar cube in glass, and add bitters. Crush sugar cube with bitters, until partially dissolved. Add whiskey and ice, stir well. Add cherry and orange peel as garnish.', 'Cocktail Glass', 4, '2/20/2023', '5:30:00');
+VALUES('OLD FASHIONED', 'bitters + peel of orange + whiskey + maraschino cherry (optional) + sugar cube', 'Place sugar cube in glass, and add bitters. Crush sugar cube with bitters, until partially dissolved. Add whiskey and ice, stir well. Add cherry and orange peel as garnish.', 'Cocktail Glass', 1, '2/20/2023', '5:30:00');
 INSERT INTO recipe(title, ingredients, instructions, glass, rating, post_date, post_time)
-VALUES('VODKA MULE', 'lime + ginger beer + vodka + simple syrup', 'Mix all ingredients into a copper mug. Garnish with lime wedge.', 'Copper Mug', 5, '7/6/2023', '5:30:00');
+VALUES('VODKA MULE', 'lime + ginger beer + vodka + simple syrup', 'Mix all ingredients into a copper mug. Garnish with lime wedge.', 'Copper Mug', 1, '7/6/2023', '5:30:00');
 INSERT INTO recipe(title, ingredients, instructions, glass, rating, post_date, post_time)
-VALUES('PALOMA', 'lime + grapefruit juice (or Squirt) + simple syrup + tequila', 'Add all ingredients into glass and garnish with lime wedge.', 'Collins Glass', 3, '4/24/2023', '7:30:00');
+VALUES('PALOMA', 'lime + grapefruit juice (or Squirt) + simple syrup + tequila', 'Add all ingredients into glass and garnish with lime wedge.', 'Collins Glass', 1, '4/24/2023', '7:30:00');
 
 COMMIT;
