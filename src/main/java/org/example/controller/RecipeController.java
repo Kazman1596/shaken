@@ -40,7 +40,7 @@ public class RecipeController {
     public List<Recipe> getRecipesByAccountId(@PathVariable int id) {
         List<Recipe> recipes = recipeDao.getRecipesByAccountId(id);
         if (recipes.size() == 0) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User does not exist")
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User does not exist");
         } else {
             return recipes;
         }

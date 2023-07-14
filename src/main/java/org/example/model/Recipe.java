@@ -14,6 +14,15 @@ public class Recipe {
     private LocalDate postDate;
     private LocalTime postTime;
 
+    public Recipe(int recipeId, String title, String ingredients, String instructions, String glass, int accountId) {
+        this.recipeId = recipeId;
+        this.title = title;
+        this.ingredients = ingredients;
+        this.instructions = instructions;
+        this.glass = glass;
+        this.accountId = accountId;
+    }
+
     public Recipe() {};
 
     public Recipe(String title, String ingredients, String instructions, String glass, int accountId) {

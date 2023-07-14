@@ -10,6 +10,8 @@ import java.util.Scanner;
 public class ShakenApplication {
     //TODO: Once C.R.U.D. DAO connections are finished, main focus is working on Unit & Integration Tests!
 
+    //TODO: After creating a backup of cocktails DB, switch to client/server model
+
     private static final String MAIN_MENU_WELCOME = "Welcome to Shaken!";
     private static final String MAIN_MENU_OPTION_SEARCH = "Search Cocktail";
     private static final String MAIN_MENU_OPTION_INGREDIENTS = "Find A Drink With Ingredients You Have";
