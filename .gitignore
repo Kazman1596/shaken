@@ -41,6 +41,7 @@ node_modules
 .project
 .settings
 target/
+/resources
 
 ### IntelliJ IDEA ###
 .idea
