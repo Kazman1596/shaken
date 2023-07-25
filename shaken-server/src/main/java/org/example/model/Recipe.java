@@ -1,5 +1,7 @@
 package org.example.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
@@ -13,7 +15,9 @@ public class Recipe {
     private String glass;
     private int accountId;
     private int rating;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate postDate;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH:mm:ss")
     private LocalTime postTime;
 
     public Recipe(int recipeId, String title, String ingredients, String instructions, String glass, int accountId) {

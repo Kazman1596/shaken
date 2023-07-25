@@ -55,6 +55,17 @@ public class RecipeService {
         return recipesByIngredient;
     }
 
+    public List<String> getIngredientList() {
+        List<Recipe> recipes = getRecipes("");
+        List<String> ingredients = new ArrayList<>();
+
+        for (Recipe recipe : recipes) {
+            ingredients.add(recipe.getIngredients());
+        }
+
+        return ingredients;
+    }
+
     public Recipe getRecipeById(int id) {
         Recipe recipe = null;
         try{
