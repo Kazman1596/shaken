@@ -42,7 +42,7 @@ node_modules
 .settings
 target/
 /resources
-.properties
+*.properties
 
 ### IntelliJ IDEA ###
 .idea
