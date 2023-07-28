@@ -35,12 +35,21 @@ public class RecipeController {
         }
     }
 
-    //TODO: We might want to move this one to user controller when the time comes
     @RequestMapping(path="/user/{id}/collection", method = RequestMethod.GET)
     public List<Recipe> getRecipesByAccountId(@PathVariable int id) {
         List<Recipe> recipes = recipeDao.getRecipesByAccountId(id);
         if (recipes.size() == 0) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User does not exist");
+        } else {
+            return recipes;
+        }
+    }
+
+    @RequestMapping(path="/ingredient/{id}", method = RequestMethod.GET)
+    public List<Recipe> getRecipesByIngredientId(@PathVariable int id) {
+        List<Recipe> recipes = recipeDao.getRecipesByIngredientId(id);
+        if (recipes.size() == 0) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Ingredient does not exist");
         } else {
             return recipes;
         }

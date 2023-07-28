@@ -12,9 +12,9 @@ import java.util.Scanner;
 
 public class App {
 
-    //TODO: Create getIngredientsByRecipeId()
+    //TODO: Create getIngredientsByRecipeId() SERVICE
 
-    //TODO: Create getRecipesByIngredient()
+    //TODO: Create getRecipesByIngredient() SERVICE
 
     //TODO: Update createRecipe() to automatically add Ingredients and add to associative table
 

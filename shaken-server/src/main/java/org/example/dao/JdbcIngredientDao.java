@@ -124,7 +124,28 @@ public class JdbcIngredientDao implements IngredientDao {
         } catch (DataIntegrityViolationException ex) {
             throw new DaoException("Data Integrity Violation", ex);
         }
+    }
 
+    @Override
+    public List<Ingredient> getIngredientsByRecipeId(int recipeId) {
+        List<Ingredient> returnedIngredients = new ArrayList<>();
+        String sql = "SELECT i.ingredient_id, i.quantity, i.unit, i.name FROM ingredient i\n" +
+                "JOIN recipe_ingredient ri\n" +
+                "\tON ri.ingredient_id = i.ingredient_id\n" +
+                "JOIN recipe r\n" +
+                "\tON ri.recipe_id = r.recipe_id\n" +
+                "WHERE r.recipe_id = 3256;";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+            while (results.next()) {
+                Ingredient ingredient = mapRowToIngredient(results);
+                returnedIngredients.add(ingredient);
+            }
+        } catch (CannotGetJdbcConnectionException ex) {
+            throw new DaoException("Unable to connect to server or database", ex);
+        }
+
+        return returnedIngredients;
     }
 
     private Ingredient mapRowToIngredient(SqlRowSet results) {

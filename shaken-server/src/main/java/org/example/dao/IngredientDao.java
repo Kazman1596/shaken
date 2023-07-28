@@ -12,5 +12,6 @@ public interface IngredientDao {
     Ingredient createIngredient(Ingredient newIngredient);
     Ingredient updateIngredient(Ingredient updatedIngredient);
     int deleteIngredient(int ingredientId);
+    List<Ingredient> getIngredientsByRecipeId(int recipeId);
     void mapIngredientToRecipe(IngredientRecipeDto ingredientRecipeDto);
 }
