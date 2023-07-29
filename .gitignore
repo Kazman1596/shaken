@@ -43,6 +43,7 @@ node_modules
 target/
 /resources
 *.properties
+TestingDatabaseConfig.java
 
 ### IntelliJ IDEA ###
 .idea
